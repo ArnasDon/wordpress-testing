@@ -1,57 +1,59 @@
 # wordpress-testing
 
-A custom WordPress theme scaffold built for experimentation with **WooCommerce**. Ships only the theme and lightweight tooling — no WordPress core, no database, no `wp-config.php`.
+A full WordPress 6.9.4 install with a custom ecommerce theme (`wptesting`) scaffolded for WooCommerce. Drop-in ready for a host like Hostinger — point a domain at the repo root, add `wp-config.php`, and run the WordPress installer.
 
 ## What's inside
 
 ```
-wp-content/themes/wptesting/   # the custom theme
-composer.json                  # PHP CodeSniffer + WordPress Coding Standards
+.                                  # WordPress 6.9.4 core
+├── index.php
+├── wp-admin/
+├── wp-includes/
+├── wp-login.php
+├── ...
+├── wp-config-sample.php           # rename to wp-config.php and fill in DB credentials
+└── wp-content/
+    ├── plugins/                   # Akismet + Hello Dolly (WP defaults)
+    └── themes/
+        ├── twentytwentythree/     # default theme
+        ├── twentytwentyfour/      # default theme
+        ├── twentytwentyfive/      # default theme
+        └── wptesting/             # CUSTOM theme — WooCommerce-compatible
+
+composer.json                      # PHP CodeSniffer + WordPress Coding Standards
 .editorconfig
-.gitignore
+.gitignore                         # ignores wp-config.php, uploads/, cache/, etc.
 ```
 
-The theme is a classic PHP theme (not block/FSE) that declares `add_theme_support('woocommerce')` and uses hooks to integrate with the WooCommerce plugin. Sample content is generic placeholder copy.
+## Getting started
 
-## Install
-
-Either drop the theme directly into a WordPress install:
+### 1. Configure WordPress
 
 ```bash
-cp -R wp-content/themes/wptesting /path/to/wp-content/themes/
+cp wp-config-sample.php wp-config.php
+# Edit wp-config.php — set DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, and the secret keys
+# (generate keys here: https://api.wordpress.org/secret-key/1.1/salt/)
 ```
 
-…or symlink during local development:
+### 2. Install
 
-```bash
-ln -s "$(pwd)/wp-content/themes/wptesting" /path/to/wp-content/themes/wptesting
-```
+Visit your site URL in a browser — WordPress will run its 5-minute install wizard and create the DB tables.
 
-Then in `wp-admin`:
+### 3. Activate the custom theme + WooCommerce
+
+In `wp-admin`:
 
 1. **Plugins → Add New** → install & activate **WooCommerce**.
 2. **Appearance → Themes** → activate **WP Testing**.
 3. Run the WooCommerce setup wizard so the Shop / Cart / Checkout / My Account pages exist.
 
-## Required plugins
+## The `wptesting` theme
 
-| Plugin | Why |
-|---|---|
-| [WooCommerce](https://wordpress.org/plugins/woocommerce/) | Provides the product CPT, cart, checkout, payments. The theme declares support but does not bundle it. |
+Classic PHP theme that declares `add_theme_support('woocommerce')` and integrates via hooks (no copied WC templates that go stale).
 
-## Dev tooling
-
-```bash
-composer install        # installs PHPCS + WPCS
-composer lint           # runs phpcs against the theme
-composer lint:fix       # auto-fixes what phpcbf can
-```
-
-## Theme structure (high level)
-
-- `style.css` — theme metadata header (Theme Name, Version, etc.) plus base CSS reset
+- `style.css` — theme metadata header + base reset
 - `functions.php` — entry point; requires the files in `inc/`
-- `inc/theme-setup.php` — `add_theme_support` calls, nav menu registration
+- `inc/theme-setup.php` — feature support, menus, image sizes
 - `inc/enqueue.php` — front-end style/script registration
 - `inc/woocommerce.php` — WC hook customizations (wrappers, columns, per-page)
 - `inc/template-tags.php` — small reusable template helpers
@@ -59,16 +61,20 @@ composer lint:fix       # auto-fixes what phpcbf can
 - `template-parts/` — partials used by the templates above
 - `assets/` — CSS, JS, images served by the theme
 
-**No WooCommerce template overrides are bundled.** Customize WC output through hooks in `inc/woocommerce.php`; only copy WC plugin templates into the theme if a hook can't accomplish the change.
+## Required plugins
 
-## Out of scope (intentionally)
+| Plugin | Why |
+|---|---|
+| [WooCommerce](https://wordpress.org/plugins/woocommerce/) | Provides the product CPT, cart, checkout, payments. The custom theme declares support but does not bundle it. |
 
-- WordPress core files
-- `wp-config.php` / database dumps
-- A custom plugin or CPT (WooCommerce provides products)
-- JS/CSS bundler — assets are served as plain files
-- CI / GitHub Actions
+## Dev tooling
+
+```bash
+composer install        # installs PHPCS + WPCS
+composer lint           # runs phpcs against wp-content/themes/wptesting
+composer lint:fix       # auto-fixes what phpcbf can
+```
 
 ## License
 
-MIT
+WordPress core, default themes, and default plugins ship under their own licenses (GPL). The custom `wptesting` theme is MIT — see `wp-content/themes/wptesting/style.css`.
