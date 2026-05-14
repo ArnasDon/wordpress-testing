@@ -1,0 +1,53 @@
+/*
+Theme Name: WP Testing
+Theme URI: https://github.com/ArnasDon/wordpress-testing
+Author: ArnasDon
+Author URI: https://github.com/ArnasDon
+Description: A minimal WordPress ecommerce theme scaffold designed to work with WooCommerce. Generic placeholder content, classic PHP templates, no build step.
+Version: 0.1.0
+Requires at least: 6.0
+Tested up to: 6.5
+Requires PHP: 7.4
+License: MIT
+License URI: https://opensource.org/licenses/MIT
+Text Domain: wptesting
+Tags: ecommerce, custom-menu, featured-images, threaded-comments, translation-ready
+WC requires at least: 8.0
+WC tested up to: 8.9
+*/
+
+/* Base reset — most styles live in assets/css/main.css */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.5;
+    color: #1a1a1a;
+    background: #fff;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    color: #0a58ca;
+}
+
+.screen-reader-text {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}

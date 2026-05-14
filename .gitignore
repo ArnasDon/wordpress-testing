@@ -1,0 +1,24 @@
+# Dependencies
+vendor/
+node_modules/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+debug.log
+
+# WordPress core / config (never commit)
+wp-config.php
+wp-config-local.php
+.htaccess
+
+# Build output (none for now, reserved)
+build/
+dist/
