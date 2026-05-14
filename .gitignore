@@ -1,5 +1,5 @@
-# Dependencies
-vendor/
+# Dependencies (only at project root; plugins may ship their own vendor/)
+/vendor/
 node_modules/
 
 # OS / editor
@@ -19,7 +19,8 @@ wp-content/debug.log
 wp-config.php
 wp-config-local.php
 .htaccess
-wp-content/uploads/
+wp-content/uploads/*
+!wp-content/uploads/dummy/
 wp-content/upgrade/
 wp-content/cache/
 wp-content/backup-db/
